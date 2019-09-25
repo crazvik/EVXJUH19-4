@@ -38,11 +38,11 @@ public class StudentDaoList implements StudentDao {
 		int i=0;
 		while(i<students.size()) {
 			i++;
-			if(id==students.get(i).getId()) {
+			if(id==students.get(i-1).getId()) {
 				break;
 			}
 		}
-		return students.get(i);
+		return students.get(i-1);
 	}
 
 	public List<Student> findAll() {
@@ -61,6 +61,15 @@ public class StudentDaoList implements StudentDao {
 		else {
 			return false;
 		}
+	}
+	
+	public String StudentToString(Student x) {
+		StringBuilder build = new StringBuilder();
+		build.append(x.getId() + ", ");
+		build.append(x.getName() + ", ");
+		build.append(x.getEmail() + ", ");
+		build.append(x.getAdress());
+		return build.toString();
 	}
 
 }
