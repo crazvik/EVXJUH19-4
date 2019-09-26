@@ -50,6 +50,10 @@ public class Course {
 		return weekDuration;
 	}
 	
+	public List<Student> getStudents() {
+		return students;
+	}
+	
 	public void register(Student student) {
 		students.add(student);
 	}

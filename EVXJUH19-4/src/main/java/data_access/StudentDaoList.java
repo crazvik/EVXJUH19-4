@@ -17,11 +17,11 @@ public class StudentDaoList implements StudentDao {
 		int i=0;
 		while(i<students.size()) {
 			if(students.get(i).getEmail().equals(email)) {
-				break;
+				return students.get(i);
 			}
-			i++;
+		i++;
 		}
-		return students.get(i);
+		return (new Student(0, "No student found", "---", "---"));
 	}
 
 	public List<Student> findByName(String name) {
@@ -29,7 +29,11 @@ public class StudentDaoList implements StudentDao {
 		for(int i=0; i<students.size(); i++) {
 			if(name.equalsIgnoreCase(students.get(i).getName())) {
 				namesFound.add(students.get(i));
+				break;
 			}
+		}
+		if(namesFound.size()==0) {
+			namesFound.add((new Student(0, "No student found", "---", "---")));
 		}
 		return namesFound;
 	}
@@ -39,10 +43,10 @@ public class StudentDaoList implements StudentDao {
 		while(i<students.size()) {
 			i++;
 			if(id==students.get(i-1).getId()) {
-				break;
+				return students.get(i-1);
 			}
 		}
-		return students.get(i-1);
+		return (new Student(0, "No student found", "---", "---"));
 	}
 
 	public List<Student> findAll() {
@@ -63,7 +67,7 @@ public class StudentDaoList implements StudentDao {
 		}
 	}
 	
-	public String StudentToString(Student x) {
+	public static String StudentToString(Student x) {
 		StringBuilder build = new StringBuilder();
 		build.append(x.getId() + ", ");
 		build.append(x.getName() + ", ");
@@ -71,5 +75,4 @@ public class StudentDaoList implements StudentDao {
 		build.append(x.getAdress());
 		return build.toString();
 	}
-
 }

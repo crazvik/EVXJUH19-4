@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.ec.jonatan.fourth_app.Course;
+import se.ec.jonatan.fourth_app.Student;
 
 public class CourseDaoList implements CourseDao {
 	private static List<Course> courses = new ArrayList<>();
@@ -18,11 +19,11 @@ public class CourseDaoList implements CourseDao {
 		int i=0;
 		while(i<courses.size()) {
 			i++;
-			if(id==courses.get(i).getId()) {
+			if(id==courses.get(i-1).getId()) {
 				break;
 			}
 		}
-		return courses.get(i);
+		return courses.get(i-1);
 	}
 
 	public List<Course> findByName(String name) {
@@ -62,5 +63,17 @@ public class CourseDaoList implements CourseDao {
 			return false;
 		}
 	}
-
+	
+	public String CourseToString(Course x) {
+		StringBuilder build = new StringBuilder();
+		build.append(x.getId() + ", ");
+		build.append(x.getCourseName() + ", ");
+		build.append(x.getStartDate() + ", ");
+		build.append(x.getDuration() + " weeks\n");
+		for(int i=0; i<x.getStudents().size(); i++) {
+			Student temp = x.getStudents().get(i);
+			build.append(StudentDaoList.StudentToString(temp) + ", \n");
+		}
+		return build.toString();
+	}
 }
