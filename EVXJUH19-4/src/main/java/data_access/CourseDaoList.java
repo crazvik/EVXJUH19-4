@@ -64,7 +64,7 @@ public class CourseDaoList implements CourseDao {
 		}
 	}
 	
-	public String CourseToString(Course x) {
+	public static String CourseToString(Course x) {
 		StringBuilder build = new StringBuilder();
 		build.append(x.getId() + ", ");
 		build.append(x.getCourseName() + ", ");

@@ -1,6 +1,7 @@
 package se.ec.jonatan.fourth_app;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
@@ -10,12 +11,12 @@ public class Course {
 	private int weekDuration;
 	private List<Student> students;
 	
-	public Course(int id, String courseName, LocalDate startDate, int weekDuration, List<Student> students) {
+	public Course(int id, String courseName, LocalDate startDate, int weekDuration) {
 		this.id = id;
 		this.courseName = courseName;
 		this.startDate = startDate;
 		this.weekDuration = weekDuration;
-		this.students = students;
+		students = new ArrayList<>();
 	}
 	
 	public void setId(int n) {
