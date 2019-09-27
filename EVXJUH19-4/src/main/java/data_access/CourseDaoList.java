@@ -7,18 +7,22 @@ import java.util.List;
 import se.ec.jonatan.fourth_app.Course;
 
 public class CourseDaoList implements CourseDao {
-	private static List<Course> courses = new ArrayList<>();
+	private static List<Course> courses;
 	private static int i;
-	
+
+	public CourseDaoList() {
+		courses = new ArrayList<>();
+	}
+
 	public Course saveCourse(Course course) {
 		i = 0;
 		while(i<courses.size()) {
 			if(courses.size()>0) {
 				if(courses.get(i).getCourseName().equals(course.getCourseName())) {
-					return (new Course(0, "Name already taken", LocalDate.parse("0000-00-00"), 0));
+					return (new Course(0, "Name already taken", LocalDate.parse("1111-11-11"), 0));
 				}
 				else if(courses.get(i).getId()==(course.getId())) {
-					return (new Course(0, "---", LocalDate.parse("0000-00-00"), 0));
+					return (new Course(0, "---", LocalDate.parse("1111-11-11"), 0));
 				}
 			}
 			i++;
