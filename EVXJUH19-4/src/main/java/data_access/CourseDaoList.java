@@ -9,8 +9,21 @@ import se.ec.jonatan.fourth_app.Student;
 
 public class CourseDaoList implements CourseDao {
 	private static List<Course> courses = new ArrayList<>();
+	private static int i;
 	
 	public Course saveCourse(Course course) {
+		i = 0;
+		while(i<courses.size()) {
+			if(courses.size()>0) {
+				if(courses.get(i).getCourseName().equals(course.getCourseName())) {
+					return (new Course(0, "Name already taken", LocalDate.parse("0000-00-00"), 0));
+				}
+				else if(courses.get(i).getId()==(course.getId())) {
+					return (new Course(0, "---", LocalDate.parse("0000-00-00"), 0));
+				}
+			}
+			i++;
+		}
 		courses.add(course);
 		return course;
 	}
@@ -67,13 +80,9 @@ public class CourseDaoList implements CourseDao {
 	public static String CourseToString(Course x) {
 		StringBuilder build = new StringBuilder();
 		build.append("Id: " + x.getId() + ", ");
-		build.append("Name: " + x.getCourseName() + ", ");
-		build.append("Start date: " + x.getStartDate() + ", ");
-		build.append("Duration: " + x.getDuration() + " weeks\n");
-		for(int i=0; i<x.getStudents().size(); i++) {
-			Student temp = x.getStudents().get(i);
-			build.append(StudentDaoList.StudentToString(temp) + ", \n");
-		}
+		build.append("name: " + x.getCourseName() + ", ");
+		build.append("startdate: " + x.getStartDate() + ", ");
+		build.append("duration: " + x.getDuration() + " weeks\n");
 		return build.toString();
 	}
 }

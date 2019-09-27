@@ -22,9 +22,9 @@ public class SchoolManagement {
 			String firstAnswer=in.nextLine();
 			switch(firstAnswer) {
 			case "1":
-				System.out.println("\nType 1 to add a student, type 2 to find from Id, "
+				System.out.print("\nType 1 to add a student, type 2 to find from Id, "
 						+ "\ntype 3 to find from name, type 4 to find from email, "
-						+ "\ntype 5 to show all registered students, type 6 to remove selected student.");
+						+ "\ntype 5 to show all registered students, type 6 to remove selected student.\nSelection: ");
 				answer=in.nextLine();
 				switch(answer) {
 				case "1":
@@ -33,11 +33,8 @@ public class SchoolManagement {
 					String name = in.nextLine();
 					String email = in.nextLine();
 					String adress = in.nextLine();
-					registerNewStudent(id, name, email, adress);
-					read = studentList.findAll().iterator();
-					if(read.hasNext()) {
-						System.out.println("Student added: \n	" + StudentDaoList.StudentToString(studentList.findAll().get(studentList.findAll().size()-1))+"\n");
-					}
+					Student student = new Student(id, name, email, adress);
+					System.out.println("Student added: \n	" + StudentDaoList.StudentToString(studentList.saveStudent(student)) + "\n");
 					break;
 				case "2":
 					read = studentList.findAll().iterator();
@@ -97,9 +94,9 @@ public class SchoolManagement {
 				}
 				break;
 			case "2":
-				System.out.println("\nType 1 to add a course, type 2 to find from Id, "
+				System.out.print("\nType 1 to add a course, type 2 to find from Id, "
 						+ "\ntype 3 to find from name, type 4 to find from date, "
-						+ "\ntype 5 to show all registered courses, type 6 to remove selected course.");
+						+ "\ntype 5 to show all registered courses, type 6 to remove selected course.\nSelection: ");
 				answer=in.nextLine();
 				switch(answer) {
 				case "1":
@@ -171,9 +168,8 @@ public class SchoolManagement {
 				}
 				break;
 			case "3":
-				System.out.println("\nType 1 to add a student to a course, type 2 to show registered students, "
-						+ "\ntype 3 to remove student, type 4 to find from date, "
-						+ "\ntype 5 to show all registered courses, type 6 to remove selected course.");
+				System.out.print("\nType 1 to add a student to a course, type 2 to show registered students, "
+						+ "\ntype 3 to remove student, type 4 to find from date\nSelection: ");
 				answer=in.nextLine();
 				switch(answer) {
 				case "1": 
@@ -181,35 +177,43 @@ public class SchoolManagement {
 					while(readCourse.hasNext()) {
 						System.out.println("	" + CourseDaoList.CourseToString(readCourse.next()));
 					}
+					System.out.print("Type the id of the course: ");
+					int courseId = Integer.parseInt(in.nextLine());
 					Iterator<Student> readStudent = studentList.findAll().iterator();
 					while(readStudent.hasNext()) {
 						System.out.println("	" + StudentDaoList.StudentToString(readStudent.next()));
 					}
-					System.out.print("Type the id of the course: ");
-					int courseId = Integer.parseInt(in.nextLine());
 					System.out.print("Type the id of the student to add: ");
 					int studentId = Integer.parseInt(in.nextLine());
 					courseList.findById(courseId).register(studentList.findById(studentId));
 					System.out.println("	" + studentList.findById(studentId).getName() + " added to the course "
 							+ courseList.findById(courseId).getCourseName());
 					break;
+				case "2":
+					readCourse = courseList.findAll().iterator();
+					while(readCourse.hasNext()) {
+						System.out.println("	" + CourseDaoList.CourseToString(readCourse.next()));
+					}
+					System.out.print("Type the id of the course: ");
+					courseId = Integer.parseInt(in.nextLine());
+					readStudent = courseList.findById(courseId).getStudents().iterator();
+					while(readStudent.hasNext()) {
+						System.out.println("	" + StudentDaoList.StudentToString(readStudent.next()));
+					}
+					break;
 				}
+				break;
 			case "4":
 				session = false;
 				break;
 			default:
 				System.out.println("Invalid input!\n");
 			}
-			
-				}
-		in.close();
 		}
-	
-	public static Student registerNewStudent(int id, String name, String email, String adress) {
-		Student student = new Student(id, name, email, adress);
-		studentList.saveStudent(student);
-		return student;
+		in.close();
 	}
+	
+
 	
 	public static Course registerNewCourse(int id, String name, LocalDate date, int week) {
 		Course course = new Course(id, name, date, week);

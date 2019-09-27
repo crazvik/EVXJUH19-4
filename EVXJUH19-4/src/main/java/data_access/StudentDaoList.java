@@ -7,8 +7,21 @@ import se.ec.jonatan.fourth_app.Student;
 
 public class StudentDaoList implements StudentDao {
 	private static List<Student> students = new ArrayList<>();
+	private static int i;
 	
 	public Student saveStudent(Student student) {
+		i = 0;
+		while(i<students.size()) {
+			if(students.size()>0) {
+				if(students.get(i).getEmail().equals(student.getEmail())) {
+					return (new Student(0, "---", "Email already taken", "---"));
+				}
+				else if(students.get(i).getId()==(student.getId())) {
+					return (new Student(0, "---", "---", "---"));
+				}
+			}
+			i++;
+		}
 		students.add(student);
 		return student;
 	}
@@ -70,9 +83,9 @@ public class StudentDaoList implements StudentDao {
 	public static String StudentToString(Student x) {
 		StringBuilder build = new StringBuilder();
 		build.append("Id: " + x.getId() + ", ");
-		build.append("Name: " +x.getName() + ", ");
-		build.append("Email: " +x.getEmail() + ", ");
-		build.append("Adress: " + x.getAdress());
+		build.append("name: " +x.getName() + ", ");
+		build.append("email: " +x.getEmail() + ", ");
+		build.append("adress: " + x.getAdress());
 		return build.toString();
 	}
 }

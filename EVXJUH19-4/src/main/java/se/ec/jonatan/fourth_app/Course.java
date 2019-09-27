@@ -56,10 +56,18 @@ public class Course {
 	}
 	
 	public void register(Student student) {
+		if(students.contains(student)) {
+			System.out.println("Already registered that student");
+			return;
+		}
 		students.add(student);
 	}
 	
 	public void unregister(Student student) {
+		if(!students.contains(student)) {
+			System.out.println("Student isn't registered on the course");
+			return;
+		}
 		students.remove(student);
 	}
 }
