@@ -71,5 +71,7 @@ public class Course {
 			return;
 		}
 		students.remove(student);
+		System.out.println("	" + student.getName() + " removed from the course "
+				+ getCourseName() + "\n");
 	}
 }

@@ -81,7 +81,7 @@ public class CourseDaoList implements CourseDao {
 		build.append("Id: " + x.getId() + ", ");
 		build.append("name: " + x.getCourseName() + ", ");
 		build.append("startdate: " + x.getStartDate() + ", ");
-		build.append("duration: " + x.getDuration() + " weeks\n");
+		build.append("duration: " + x.getDuration() + " weeks");
 		return build.toString();
 	}
 }
