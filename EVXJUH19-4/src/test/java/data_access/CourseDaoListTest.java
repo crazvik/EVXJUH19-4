@@ -79,5 +79,7 @@ class CourseDaoListTest {
 
     @Test
     void testCourseToString() {
+    	Assertions.assertEquals("Id: 500, name: Course3, startdate: 2019-07-25, duration: 10 weeks", CourseDaoList.CourseToString(testCourse.saveCourse(course3)));
+    	Assertions.assertNotEquals("Id: 100, name: Course4, startdate: 2019-12-10, duration: 10 weeks", CourseDaoList.CourseToString(testCourse.saveCourse(course3)));
     }
 }
