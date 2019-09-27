@@ -6,8 +6,12 @@ import java.util.List;
 import se.ec.jonatan.fourth_app.Student;
 
 public class StudentDaoList implements StudentDao {
-	private static List<Student> students = new ArrayList<>();
+	private static List<Student> students;
 	private static int i;
+	
+	public StudentDaoList() {
+		students = new ArrayList<>();
+	}
 	
 	public Student saveStudent(Student student) {
 		i = 0;
