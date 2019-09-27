@@ -69,10 +69,10 @@ public class StudentDaoList implements StudentDao {
 	
 	public static String StudentToString(Student x) {
 		StringBuilder build = new StringBuilder();
-		build.append(x.getId() + ", ");
-		build.append(x.getName() + ", ");
-		build.append(x.getEmail() + ", ");
-		build.append(x.getAdress());
+		build.append("Id: " + x.getId() + ", ");
+		build.append("Name: " +x.getName() + ", ");
+		build.append("Email: " +x.getEmail() + ", ");
+		build.append("Adress: " + x.getAdress());
 		return build.toString();
 	}
 }

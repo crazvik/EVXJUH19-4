@@ -39,7 +39,7 @@ public class CourseDaoList implements CourseDao {
 	public List<Course> findByDate(LocalDate date) {
 		List<Course> allDatesFound = new ArrayList<>();
 		for(int i=0; i<courses.size(); i++) {
-			if(courses.get(i).getStartDate()==date) {
+			if(courses.get(i).getStartDate().equals(date)) {
 				allDatesFound.add(courses.get(i));
 			}
 		}
@@ -66,10 +66,10 @@ public class CourseDaoList implements CourseDao {
 	
 	public static String CourseToString(Course x) {
 		StringBuilder build = new StringBuilder();
-		build.append(x.getId() + ", ");
-		build.append(x.getCourseName() + ", ");
-		build.append(x.getStartDate() + ", ");
-		build.append(x.getDuration() + " weeks\n");
+		build.append("Id: " + x.getId() + ", ");
+		build.append("Name: " + x.getCourseName() + ", ");
+		build.append("Start date: " + x.getStartDate() + ", ");
+		build.append("Duration: " + x.getDuration() + " weeks\n");
 		for(int i=0; i<x.getStudents().size(); i++) {
 			Student temp = x.getStudents().get(i);
 			build.append(StudentDaoList.StudentToString(temp) + ", \n");
