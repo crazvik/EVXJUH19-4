@@ -105,10 +105,11 @@ public class SchoolManagement {
 					String name = in.nextLine();
 					LocalDate date = LocalDate.parse(in.nextLine());
 					int duration = Integer.parseInt(in.nextLine());
-					registerNewCourse(id, name, date, duration);
+					Course course = new Course(id, name, date, duration);
+					courseList.saveCourse(course);
 					Iterator<Course> read = courseList.findAll().iterator();
 					if(read.hasNext()) {
-						System.out.println("Course added: " + CourseDaoList.CourseToString(courseList.findAll().get(courseList.findAll().size()-1))+"\n");
+						System.out.println("Course added: " + CourseDaoList.CourseToString(courseList.findAll().get(courseList.findAll().size()-1)));
 					}
 					break;
 				case "2":
@@ -158,7 +159,7 @@ public class SchoolManagement {
 						System.out.println("	" + CourseDaoList.CourseToString(read.next()));
 					}
 					id = Integer.parseInt(in.nextLine());
-					if(studentList.deleteStudent(studentList.findById(id))==true) {
+					if(studentList.deleteStudent(studentList.findById(id))) {
 						System.out.println("\nStudent removed\n");
 					}
 					else {
@@ -186,8 +187,6 @@ public class SchoolManagement {
 					System.out.print("Type the id of the student to add: ");
 					int studentId = Integer.parseInt(in.nextLine());
 					courseList.findById(courseId).register(studentList.findById(studentId));
-					System.out.println("	" + studentList.findById(studentId).getName() + " added to the course "
-							+ courseList.findById(courseId).getCourseName());
 					break;
 				case "2":
 					readCourse = courseList.findAll().iterator();
@@ -211,13 +210,5 @@ public class SchoolManagement {
 			}
 		}
 		in.close();
-	}
-	
-
-	
-	public static Course registerNewCourse(int id, String name, LocalDate date, int week) {
-		Course course = new Course(id, name, date, week);
-		courseList.saveCourse(course);
-		return course;
 	}
 }

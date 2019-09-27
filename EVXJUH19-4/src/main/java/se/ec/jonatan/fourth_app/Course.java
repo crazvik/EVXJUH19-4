@@ -57,15 +57,17 @@ public class Course {
 	
 	public void register(Student student) {
 		if(students.contains(student)) {
-			System.out.println("Already registered that student");
+			System.out.println("	Already registered that student\n");
 			return;
 		}
 		students.add(student);
+		System.out.println("	" + student.getName() + " added to the course "
+							+ getCourseName() + "\n");
 	}
 	
 	public void unregister(Student student) {
 		if(!students.contains(student)) {
-			System.out.println("Student isn't registered on the course");
+			System.out.println("Student isn't registered on the course\n");
 			return;
 		}
 		students.remove(student);

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.ec.jonatan.fourth_app.Course;
-import se.ec.jonatan.fourth_app.Student;
 
 public class CourseDaoList implements CourseDao {
 	private static List<Course> courses = new ArrayList<>();
