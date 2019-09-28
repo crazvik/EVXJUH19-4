@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import se.ec.jonatan.fourth_app.Course;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 class CourseDaoListTest {
     private static CourseDaoList testCourse = new CourseDaoList();
