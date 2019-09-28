@@ -3,7 +3,6 @@ package data_access;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import se.ec.jonatan.fourth_app.Course;
 import se.ec.jonatan.fourth_app.Student;
 
 import static org.junit.jupiter.api.Assertions.*;
