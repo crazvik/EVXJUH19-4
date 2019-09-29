@@ -19,10 +19,10 @@ public class CourseDaoList implements CourseDao {
 		while(i<courses.size()) {
 			if(courses.size()>0) {
 				if(courses.get(i).getCourseName().equals(course.getCourseName())) {
-					return (new Course(0, "Name already taken", LocalDate.parse("1111-11-11"), 0));
+					return (new Course(0, "[Name already taken]", LocalDate.parse("1111-11-11"), 0));
 				}
 				else if(courses.get(i).getId()==(course.getId())) {
-					return (new Course(0, "---", LocalDate.parse("1111-11-11"), 0));
+					return (new Course(0, "[Id already taken]", LocalDate.parse("1111-11-11"), 0));
 				}
 			}
 			i++;
@@ -36,10 +36,10 @@ public class CourseDaoList implements CourseDao {
 		while(i<courses.size()) {
 			i++;
 			if(id==courses.get(i-1).getId()) {
-				break;
+				return courses.get(i-1);
 			}
 		}
-		return courses.get(i-1);
+		return new Course(0, "[Course not found]", LocalDate.parse("1111-11-11"), 0);
 	}
 
 	public List<Course> findByName(String name) {
@@ -49,6 +49,9 @@ public class CourseDaoList implements CourseDao {
 				namesFound.add(courses.get(i));
 			}
 		}
+        if(namesFound.size()==0) {
+            namesFound.add((new Course(0, "[No course found]", LocalDate.parse("1111-11-11"), 0)));
+        }
 		return namesFound;
 	}
 
@@ -59,6 +62,9 @@ public class CourseDaoList implements CourseDao {
 				allDatesFound.add(courses.get(i));
 			}
 		}
+        if(allDatesFound.size()==0) {
+            allDatesFound.add((new Course(0, "[No course found]", LocalDate.parse("1111-11-11"), 0)));
+        }
 		return allDatesFound;
 	}
 

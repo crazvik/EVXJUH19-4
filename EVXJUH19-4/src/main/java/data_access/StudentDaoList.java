@@ -18,10 +18,10 @@ public class StudentDaoList implements StudentDao {
 		while(i<students.size()) {
 			if(students.size()>0) {
 				if(students.get(i).getEmail().equals(student.getEmail())) {
-					return (new Student(0, "---", "Email already taken", "---"));
+					return (new Student(0, "---", "[Email already taken]", "---"));
 				}
 				else if(students.get(i).getId()==(student.getId())) {
-					return (new Student(0, "---", "---", "---"));
+					return (new Student(0, "[Id already taken]", "---", "---"));
 				}
 			}
 			i++;
@@ -38,7 +38,7 @@ public class StudentDaoList implements StudentDao {
 			}
 		i++;
 		}
-		return (new Student(0, "No student found", "---", "---"));
+		return (new Student(0, "[No student found]", "---", "---"));
 	}
 
 	public List<Student> findByName(String name) {
@@ -50,7 +50,7 @@ public class StudentDaoList implements StudentDao {
 			}
 		}
 		if(namesFound.size()==0) {
-			namesFound.add((new Student(0, "No student found", "---", "---")));
+			namesFound.add((new Student(0, "[No student found]", "---", "---")));
 		}
 		return namesFound;
 	}
@@ -63,7 +63,7 @@ public class StudentDaoList implements StudentDao {
 				return students.get(i-1);
 			}
 		}
-		return (new Student(0, "No student found", "---", "---"));
+		return (new Student(0, "[No student found]", "---", "---"));
 	}
 
 	public List<Student> findAll() {

@@ -7,11 +7,11 @@ import data_access.CourseDaoList;
 import data_access.StudentDaoList;
 
 public class SchoolManagement {
-	static StudentDaoList studentList = new StudentDaoList();
-	static CourseDaoList courseList = new CourseDaoList();
-	static String answer = "";
-	static boolean session = true;
-	static Iterator<Student> read;
+	private static StudentDaoList studentList = new StudentDaoList();
+	private static CourseDaoList courseList = new CourseDaoList();
+	private static String answer = "";
+	private static boolean session = true;
+	private static Iterator<Student> read;
 	
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
@@ -28,12 +28,12 @@ public class SchoolManagement {
 				answer=in.nextLine();
 				switch(answer) {
 				case "1":
-					System.out.println("\nEnter Id, name, email and adress in this order: ");
+					System.out.println("\nEnter Id, name, email and address in this order: ");
 					int id = Integer.parseInt(in.nextLine());
 					String name = in.nextLine();
 					String email = in.nextLine();
-					String adress = in.nextLine();
-					Student student = new Student(id, name, email, adress);
+					String address = in.nextLine();
+					Student student = new Student(id, name, email, address);
 					System.out.println("Student added: \n	" + StudentDaoList.StudentToString(studentList.saveStudent(student)) + "\n");
 					break;
 				case "2":
@@ -71,14 +71,14 @@ public class SchoolManagement {
 					break;
 				case "5":
 					read = studentList.findAll().iterator();
-					System.out.println("Registered students: ");
+					System.out.println("\nRegistered students: ");
 					while(read.hasNext()) {
 						System.out.println("	" + StudentDaoList.StudentToString(read.next()));
 					}
 					System.out.println();
 					break;
 				case "6":
-					while(!studentList.findAll().isEmpty()) {
+					if(!studentList.findAll().isEmpty()) {
 						read = studentList.findAll().iterator();
 						System.out.println("Select registered student to remove by typing their id: ");
 						while(read.hasNext()) {
@@ -86,13 +86,12 @@ public class SchoolManagement {
 						}
 						System.out.print("\nId: ");
 						id = Integer.parseInt(in.nextLine());
-						if(studentList.deleteStudent(studentList.findById(id))==true) {
+						if(studentList.deleteStudent(studentList.findById(id))) {
 							System.out.println("\nStudent removed\n");
 						}
 						else {
 							System.out.println("\nNo student found\n");
 						}
-						break;
 					}
 					break;
 				default:
@@ -117,6 +116,7 @@ public class SchoolManagement {
 					if(read.hasNext()) {
 						System.out.println("Course added: \n	" + CourseDaoList.CourseToString(courseList.findAll().get(courseList.findAll().size()-1)));
 					}
+					System.out.println();
 					break;
 				case "2":
 					read = courseList.findAll().iterator();
@@ -148,7 +148,13 @@ public class SchoolManagement {
 						System.out.println("Start date: " + read.next().getStartDate());
 					}
 					System.out.print("\nCourse start: ");
-					date = LocalDate.parse(in.nextLine());
+					String ymd = in.nextLine();
+					if(ymd.length()<10) {
+						date = LocalDate.parse("1111-11-11");
+					}
+					else {
+						date = LocalDate.parse(ymd);
+					}
 					read = courseList.findByDate(date).iterator();
 					while(read.hasNext()) {
 						System.out.println("Course: \n	" + CourseDaoList.CourseToString(read.next())+"\n");
@@ -156,7 +162,7 @@ public class SchoolManagement {
 					break;
 				case "5":
 					read = courseList.findAll().iterator();
-					System.out.println("Registered courses: ");
+					System.out.println("\nRegistered courses: ");
 					while(read.hasNext()) {
 						System.out.println("	" + CourseDaoList.CourseToString(read.next()));
 					}
@@ -188,6 +194,7 @@ public class SchoolManagement {
 				switch(answer) {
 				case "1": 
 					Iterator<Course> readCourse = courseList.findAll().iterator();
+					System.out.println();
 					while(readCourse.hasNext()) {
 						System.out.println("	" + CourseDaoList.CourseToString(readCourse.next()));
 					}
@@ -216,13 +223,13 @@ public class SchoolManagement {
 					break;
 				case "3":
 					readCourse = courseList.findAll().iterator();
-					while(readCourse.hasNext()) {
+					while (readCourse.hasNext()) {
 						System.out.println("	" + CourseDaoList.CourseToString(readCourse.next()));
 					}
 					System.out.print("Enter the id of the course: ");
 					courseId = Integer.parseInt(in.nextLine());
 					readStudent = courseList.findById(courseId).getStudents().iterator();
-					while(readStudent.hasNext()) {
+					while (readStudent.hasNext()) {
 						System.out.println("	" + StudentDaoList.StudentToString((readStudent.next())));
 					}
 					System.out.print("Enter the id of the student to remove: ");
@@ -230,74 +237,93 @@ public class SchoolManagement {
 					courseList.findById(courseId).unregister(studentList.findById(studentId));
 					break;
 				case "4":
-					readStudent = studentList.findAll().iterator();
-					System.out.println("Registered students: ");
-					while(readStudent.hasNext()) {
-						System.out.println("	" + StudentDaoList.StudentToString(readStudent.next()));
+					if(studentList.findAll().size()>0) {
+						readStudent = studentList.findAll().iterator();
+						System.out.println("\nRegistered students: ");
+						while (readStudent.hasNext()) {
+							System.out.println("	" + StudentDaoList.StudentToString(readStudent.next()));
+						}
+						System.out.print("Enter the id of the student you want to edit: ");
+						studentId = Integer.parseInt(in.nextLine());
+						System.out.println(StudentDaoList.StudentToString(studentList.findById(studentId)));
+						System.out.print("What do you want to edit?\nEnter 1 for id, \nEnter 2 for name, "
+								+ "\nEnter 3 for email, \nEnter 4 for address \nSelection: ");
+						answer = in.nextLine();
+						switch (answer) {
+							case "1":
+								System.out.print("Old id: " + studentList.findById(studentId).getId() + "\nNew id: ");
+								studentList.findById(studentId).setId(Integer.parseInt(in.nextLine()));
+								System.out.println();
+								break;
+							case "2":
+								System.out.print("Old name: " + studentList.findById(studentId).getName() + "\nNew name: ");
+								studentList.findById(studentId).setName(in.nextLine());
+								System.out.println();
+								break;
+							case "3":
+								System.out.print("Old email: " + studentList.findById(studentId).getEmail() + "\nNew email: ");
+								studentList.findById(studentId).setEmail(in.nextLine());
+								System.out.println();
+								break;
+							case "4":
+								System.out.print("Old address: " + studentList.findById(studentId).getAdress() + "\nNew address: ");
+								studentList.findById(studentId).setAdress(in.nextLine());
+								System.out.println();
+								break;
+						}
+						break;
 					}
-					System.out.print("Enter the id of the student you want to edit: ");
-					studentId = Integer.parseInt(in.nextLine());
-					System.out.println(StudentDaoList.StudentToString(studentList.findById(studentId)));
-					System.out.print("What do you want to edit?\nEnter 1 for id, \nEnter 2 for name, "
-										+ "\nEnter 3 for email, \nEnter 4 for adress \nSelection: ");
-					answer = in.nextLine();
-					switch(answer) {
-					case "1":
-						System.out.print("Old id: " + studentList.findById(studentId).getId() + "\nNew id: ");
-						studentList.findById(studentId).setId(Integer.parseInt(in.nextLine()));
-						break;
-					case "2":
-						System.out.print("Old name: " + studentList.findById(studentId).getName() + "\nNew name: ");
-						studentList.findById(studentId).setName(in.nextLine());
-						break;
-					case "3":
-						System.out.print("Old email: " + studentList.findById(studentId).getEmail() + "\nNew email: ");
-						studentList.findById(studentId).setEmail(in.nextLine());
-						break;
-					case "4":
-						System.out.print("Old adress: " + studentList.findById(studentId).getAdress() + "\nNew adress: ");
-						studentList.findById(studentId).setAdress(in.nextLine());
+					else {
+						System.out.println("	No students registered\n");
 						break;
 					}
-					break;
 				case "5":
-					readCourse = courseList.findAll().iterator();
-					System.out.println("Registered courses: ");
-					while(readCourse.hasNext()) {
-						System.out.println("	" + CourseDaoList.CourseToString((readCourse.next())));
+					if(courseList.findAll().size()>0) {
+						readCourse = courseList.findAll().iterator();
+						System.out.println("\nRegistered courses: ");
+						while (readCourse.hasNext()) {
+							System.out.println("	" + CourseDaoList.CourseToString((readCourse.next())));
+						}
+						System.out.print("Enter the id of the course you want to edit: ");
+						courseId = Integer.parseInt(in.nextLine());
+						System.out.println(CourseDaoList.CourseToString(courseList.findById(courseId)));
+						System.out.print("What do you want to edit?\nEnter 1 for id, \nEnter 2 for name, "
+								+ "\nEnter 3 for start date, \nEnter 4 for duration \nSelection: ");
+						answer = in.nextLine();
+						switch (answer) {
+							case "1":
+								System.out.print("Old id: " + courseList.findById(courseId).getId() + "\nNew id: ");
+								courseList.findById(courseId).setId(Integer.parseInt(in.nextLine()));
+								System.out.println();
+								break;
+							case "2":
+								System.out.print("Old name: " + courseList.findById(courseId).getCourseName() + "\nNew name: ");
+								courseList.findById(courseId).setCourseName(in.nextLine());
+								System.out.println();
+								break;
+							case "3":
+								System.out.print("Old start date: " + courseList.findById(courseId).getStartDate() + "\nNew start date: ");
+								courseList.findById(courseId).setStartDate(LocalDate.parse(in.nextLine()));
+								System.out.println();
+								break;
+							case "4":
+								System.out.print("Old duration: " + courseList.findById(courseId).getDuration() + "\nNew duration: ");
+								courseList.findById(courseId).setDuration(Integer.parseInt(in.nextLine()));
+								System.out.println();
+								break;
+						}
+						break;
 					}
-					System.out.print("Enter the id of the course you want to edit: ");
-					courseId = Integer.parseInt(in.nextLine());
-					System.out.println(CourseDaoList.CourseToString(courseList.findById(courseId)));
-					System.out.print("What do you want to edit?\nEnter 1 for id, \nEnter 2 for name, "
-										+ "\nEnter 3 for startdate, \nEnter 4 for duration \nSelection: ");
-					answer = in.nextLine();
-					switch(answer) {
-					case "1":
-						System.out.print("Old id: " + courseList.findById(courseId).getId() + "\nNew id: ");
-						courseList.findById(courseId).setId(Integer.parseInt(in.nextLine()));
-						System.out.println();
-						break;
-					case "2":
-						System.out.print("Old name: " + courseList.findById(courseId).getCourseName() + "\nNew name: ");
-						courseList.findById(courseId).setCourseName(in.nextLine());
-						break;
-					case "3":
-						System.out.print("Old startdate: " + courseList.findById(courseId).getStartDate() + "\nNew startdate: ");
-						courseList.findById(courseId).setStartDate(LocalDate.parse(in.nextLine()));
-						break;
-					case "4":
-						System.out.print("Old adress: " + courseList.findById(courseId).getDuration() + "\nNew duration: ");
-						courseList.findById(courseId).setDuration(Integer.parseInt(in.nextLine()));
+					else {
+						System.out.println("	No courses registered\n");
 						break;
 					}
-					break;
 				default:
 					System.out.println("Invalid input!\n");
 				}
 				break;
 			case "4":
-				System.out.println("Manager closed");
+				System.out.println("	Manager closed");
 				session = false;
 				break;
 			default:

@@ -19,9 +19,7 @@ public class Course {
 		students = new ArrayList<>();
 	}
 	
-	public void setId(int n) {
-		id = n;
-	}
+	public void setId(int n) { id = n; }
 	
 	public int getId() {
 		return id;
@@ -67,7 +65,7 @@ public class Course {
 	
 	public void unregister(Student student) {
 		if(!students.contains(student)) {
-			System.out.println("Student isn't registered on the course\n");
+			System.out.println("    Student isn't registered on the course\n");
 			return;
 		}
 		students.remove(student);
