@@ -95,7 +95,7 @@ public class SchoolManagement {
 					}
 					break;
 				default:
-					System.out.println("Invalid input!\n");	
+					System.out.println("Invalid input!\n");
 				}
 				break;
 			case "2":
@@ -323,7 +323,7 @@ public class SchoolManagement {
 				}
 				break;
 			case "4":
-				System.out.println("	Manager closed");
+				System.out.println("Manager closed");
 				session = false;
 				break;
 			default:
